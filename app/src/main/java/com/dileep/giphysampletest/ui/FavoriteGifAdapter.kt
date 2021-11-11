@@ -38,7 +38,6 @@ class FavoriteGifAdapter(
             with(binding){
                 item = gif
                 listener = toggleListener
-//                tbItem.isGone = true
                 executePendingBindings()
             }
         }

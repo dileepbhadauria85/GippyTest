@@ -49,6 +49,9 @@ class TrendingFragment : BaseFragment(), TrendingGifToggleListener {
         initTrending()
         val query = savedInstanceState?.getString(LAST_SEARCH_QUERY) ?: DEFAULT_QUERY
         initSearch(query)
+        binding.btnSearch.setOnClickListener {
+            updateGiphyListFromInput()
+        }
     }
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
@@ -65,18 +68,12 @@ class TrendingFragment : BaseFragment(), TrendingGifToggleListener {
             header = GifLoadStateAdapter(adapter::retry),
             footer = GifLoadStateAdapter(adapter::retry)
         )
-        binding.rvSearch.adapter = adapter.withLoadStateHeaderAndFooter(
-            header = GifLoadStateAdapter(adapter::retry),
-            footer = GifLoadStateAdapter(adapter::retry)
-        )
     }
 
     private fun initTrending() {
         trendingJob?.cancel()
         trendingJob = viewLifecycleOwner.lifecycleScope.launch {
             viewModel.getTrendingGif().collectLatest {
-                binding.rvTrending.visibility = View.VISIBLE
-                binding.rvSearch.visibility = View.GONE
                 adapter.submitData(it)
             }
         }
@@ -91,6 +88,7 @@ class TrendingFragment : BaseFragment(), TrendingGifToggleListener {
         binding.etSearch.text.trim().let {
             if (it.isNotEmpty()) {
                 search(it.toString())
+                hideSoftKeyboard(binding.etSearch)
             }
         }
     }
@@ -122,8 +120,6 @@ class TrendingFragment : BaseFragment(), TrendingGifToggleListener {
         searchJob?.cancel()
         searchJob = lifecycleScope.launch {
             viewModel.searchGiphy(query).collectLatest {
-                binding.rvTrending.visibility = View.GONE
-                binding.rvSearch.visibility = View.VISIBLE
                 adapter.submitData(it)
             }
         }

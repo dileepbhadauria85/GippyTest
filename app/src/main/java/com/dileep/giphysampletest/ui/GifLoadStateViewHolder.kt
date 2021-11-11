@@ -22,7 +22,7 @@ class GifLoadStateViewHolder(
     }
 
     fun bind(loadState: LoadState) {
-        Log.d("LOAD_GIF", "GifLoadStateAdapter.bind호출 LoadState:$loadState")
+        Log.d("LOAD_GIF", "GifLoadStateAdapter LoadState:$loadState")
         binding.pbLoading.isVisible = loadState is LoadState.Loading
         binding.ivRetry.isVisible = loadState !is LoadState.Loading
     }

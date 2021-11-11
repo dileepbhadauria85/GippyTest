@@ -26,7 +26,7 @@
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:background="@color/transparent0"
+            android:background="@color/white"
             app:tabIndicatorHeight="0dp"
             app:layout_constraintBottom_toBottomOf="@+id/container"
             app:layout_constraintEnd_toEndOf="parent"

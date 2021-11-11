@@ -30,7 +30,6 @@ class MainViewModel @Inject constructor(
     private var _update = MutableLiveData<Event<Boolean>>()
     val update: LiveData<Event<Boolean>>
         get() = _update
-    // two-way databinding
     val queryString: MutableLiveData<String> by lazy {
         MutableLiveData<String>()
     }

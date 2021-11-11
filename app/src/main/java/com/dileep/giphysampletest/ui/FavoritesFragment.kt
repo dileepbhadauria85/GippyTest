@@ -68,7 +68,6 @@ class FavoritesFragment : BaseFragment(), TrendingGifToggleListener {
         viewModel.update.observe(viewLifecycleOwner,
             Observer {
                 it.getContentIfNotHandled()?.let {
-//                fAdapter.notifyDataSetChanged()
                 }
             })
     }

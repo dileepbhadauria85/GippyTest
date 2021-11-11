@@ -46,8 +46,6 @@ class GifRemoteMediator(
         try {
             val apiQuery = query
             val pageSize = state.config.pageSize
-            if(TextUtils.isEmpty(apiQuery)) {
-
                 val response =
                     remoteDataSource.getTrendingGiphy(
                         itemsPerPage = pageSize,
@@ -68,28 +66,6 @@ class GifRemoteMediator(
                     }
                 }
                 return MediatorResult.Success(endOfPageReached)
-            }else{
-                val response =
-                    remoteDataSource.getSearchedGiphy(
-                        itemsPerPage = pageSize,
-                        offset = page * pageSize,query = apiQuery
-                    )
-
-                val gifs = response.mapToGif()
-                val endOfPageReached = gifs.isEmpty()
-                withContext(Dispatchers.IO) {
-                    val prevKey = if (page == TRENDING_STARTING_PAGE_INDEX) null else page - 1
-                    val nextKey = if (endOfPageReached) null else page + 1
-                    val keys = gifs.map {
-                        RemoteKey(gifId = it.id, prevKey = prevKey, nextKey = nextKey)
-                    }
-                   with(localDataSource) {
-                        saveRemoteKeys(keys)
-                        saveGifs(gifs)
-                    }
-                }
-                return MediatorResult.Success(endOfPageReached)
-            }
         } catch (exception: IOException) {
             return MediatorResult.Error(exception)
         } catch (exception: HttpException) {
@@ -98,7 +74,6 @@ class GifRemoteMediator(
     }
 
 
-    // LoadType.REFRESH
     private suspend fun getRemoteKeyClosestToCurrentPosition(
         state: PagingState<Int, Gif>
     ): RemoteKey? {
@@ -109,7 +84,6 @@ class GifRemoteMediator(
         }
     }
 
-    // LoadType.PREPEND
     private suspend fun getRemoteKeyForFirstItem(
         state: PagingState<Int, Gif>
     ): RemoteKey? {
@@ -119,7 +93,6 @@ class GifRemoteMediator(
             }
     }
 
-    // LoadType.APPEND
     private suspend fun getRemoteKeyForLastItem(
         state: PagingState<Int, Gif>
     ): RemoteKey? {
