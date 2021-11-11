@@ -1,0 +1,101 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+}
+
+android {
+    compileSdkVersion rootProject.projectCompileSdkVersion
+    buildToolsVersion "30.0.3"
+
+    defaultConfig {
+        applicationId "com.dileep.giphysampletest"
+        minSdkVersion rootProject.projectMinSdkVersion
+        targetSdkVersion rootProject.projectTargetSdkVersion
+        multiDexEnabled true
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+        freeCompilerArgs += ["-Xopt-in=kotlin.RequiresOptIn"]
+    }
+
+    buildFeatures {
+        viewBinding true
+        dataBinding true
+    }
+
+    testOptions {
+        unitTests.includeAndroidResources = true
+    }
+}
+
+dependencies {
+    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'androidx.appcompat:appcompat:1.3.1'
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation "androidx.test.espresso:espresso-core:$projectEspressoVersion"
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "androidx.core:core-ktx:$projectCoreVersion"
+    implementation "androidx.fragment:fragment-ktx:$projectFragmentKtxVersion"
+    implementation "androidx.appcompat:appcompat:$projectAppcompatVersion"
+    implementation "com.google.android.material:material:$projectMaterialVersion"
+    implementation "androidx.constraintlayout:constraintlayout:$projectConstraintLayoutVersion"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$projectArchLifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$projectArchLifecycleVersion"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$projectRecyclerVersion"
+
+    // Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$projectRetrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$projectRetrofitVersion"
+
+
+    // Hilt
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+    //implementation "androidx.hilt:hilt-lifecycle-viewmodel:$projectHiltAndroidxVersion"
+    kapt "androidx.hilt:hilt-compiler:$projectHiltAndroidxVersion"
+
+    // Room
+    implementation "androidx.room:room-runtime:$projectRoomVersion"
+    kapt "androidx.room:room-compiler:$projectRoomVersion"
+    implementation "androidx.room:room-ktx:$projectRoomVersion"
+
+    // Paging
+    implementation "androidx.paging:paging-runtime-ktx:$projectPagingVersion"
+
+    // Glide for Image Loading and Caching
+    implementation "com.github.bumptech.glide:glide:$projectGlideVersion"
+    kapt "com.github.bumptech.glide:compiler:$projectGlideVersion"
+
+    // Android Testing Support Library's runner and rules
+    androidTestImplementation "androidx.test:core:$projectAtslVersion"
+    androidTestImplementation "androidx.test:runner:$projectAtslVersion"
+    androidTestImplementation "androidx.test:rules:$projectAtslVersion"
+    androidTestImplementation "androidx.arch.core:core-testing:$projectArchcoreVersion"
+
+    androidTestImplementation "com.squareup.retrofit2:retrofit-mock:$projectRetrofitVersion"
+    androidTestImplementation "org.mockito:mockito-core:$projectMockitoVersion"
+    androidTestImplementation "org.mockito:mockito-android:$projectMockitoVersion"
+
+    testImplementation "com.squareup.retrofit2:retrofit-mock:$projectRetrofitVersion"
+    testImplementation "androidx.arch.core:core-testing:$projectArchcoreVersion"
+    testImplementation "org.mockito:mockito-core:$projectMockitoVersion"
+
+}

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="item"
+            type="com.dileep.giphysampletest.data.source.local.entity.Gif" />
+        <variable
+            name="listener"
+            type="com.dileep.giphysampletest.ui.TrendingGifToggleListener" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp">
+
+        <ImageView
+            android:id="@+id/iv_item"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:adjustViewBounds="true"
+            bind:layoutWidth="@{item.width}"
+            bind:layoutHeight="@{item.height}"
+            bind:imageUrl="@{item}"
+            android:layout_gravity="center"
+            tools:background="@tools:sample/avatars" />
+
+        <ToggleButton
+            android:id="@+id/tb_item"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="bottom|end"
+            android:layout_marginBottom="15dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/selector_favorite"
+            android:text="@null"
+            android:textOn="@null"
+            android:textOff="@null"
+            android:onClick="@{() -> listener.onToggleFavorite(item)}"
+            bind:favorite="@{item.favorite}"/>
+
+    </FrameLayout>
+</layout>
